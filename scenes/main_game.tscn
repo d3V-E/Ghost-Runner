@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c06ovuy6mhkin" path="res://assets/Tile1.png" id="1_s3esy"]
 [ext_resource type="Texture2D" uid="uid://bb8hxqnkp08d8" path="res://assets/Background.png" id="2_0rdsr"]
 [ext_resource type="Texture2D" uid="uid://uidwefvo8xfa" path="res://assets/Ground.png" id="3_ipu61"]
+[ext_resource type="Texture2D" uid="uid://dbgejvm07ta24" path="res://assets/Background Sky.png" id="3_ygxny"]
 [ext_resource type="Script" uid="uid://c2uop8yxdde1j" path="res://scripts/main_player.gd" id="4_ipu61"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r72bl"]
@@ -122,6 +123,10 @@ script = ExtResource("1_72e8q")
 [node name="Background" type="Sprite2D" parent="Visual Ground" unique_id=1636706226]
 z_index = -1
 texture = ExtResource("2_0rdsr")
+
+[node name="BackgroundSky" type="Sprite2D" parent="Visual Ground" unique_id=2146239580]
+position = Vector2(0, -360)
+texture = ExtResource("3_ygxny")
 
 [node name="Ground" type="Sprite2D" parent="Visual Ground" unique_id=1136126797]
 position = Vector2(0, 130)
