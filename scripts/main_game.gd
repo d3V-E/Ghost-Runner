@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var player = $"Main Player"
+@onready var player = $"Player"
 @onready var part = $"Visual Ground"
 @onready var background = $"Visual Ground/BackgroundSky"
 

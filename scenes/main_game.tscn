@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://c4x380obe28c5" path="res://assets/Particle.png" id="7_wi4c7"]
 [ext_resource type="Texture2D" uid="uid://bq1s4nqksha3h" path="res://assets/timer.png" id="8_2l77h"]
 [ext_resource type="FontFile" uid="uid://cx2ex0q7cve0h" path="res://assets/fonts/Quantico-Bold.ttf" id="9_nqdth"]
+[ext_resource type="Script" uid="uid://cmhsh6h4hbeoc" path="res://scripts/ghost.gd" id="10_5cypo"]
+[ext_resource type="Texture2D" uid="uid://cr852yd82cwcw" path="res://assets/Ghost.png" id="10_nqdth"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r72bl"]
 size = Vector2(640, 100)
@@ -118,6 +120,65 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xgy4w"]
 size = Vector2(10, 15)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_8xp80"]
+atlas = ExtResource("10_nqdth")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sp04v"]
+atlas = ExtResource("10_nqdth")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ihbck"]
+atlas = ExtResource("10_nqdth")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vnsdt"]
+atlas = ExtResource("10_nqdth")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ikqpi"]
+atlas = ExtResource("10_nqdth")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5luka"]
+atlas = ExtResource("10_nqdth")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ei6bp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8xp80")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sp04v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ihbck")
+}],
+"loop": 2,
+"name": &"Default",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vnsdt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ikqpi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5luka")
+}],
+"loop": 0,
+"name": &"Rage",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_visbf"]
+radius = 9.0
+height = 22.0
+
 [node name="Main game" type="Node2D" unique_id=1792818910]
 script = ExtResource("1_72e8q")
 
@@ -144,26 +205,27 @@ shape = SubResource("RectangleShape2D_r72bl")
 [node name="Player Position Test (X)" type="Timer" parent="Visual Ground" unique_id=939197074]
 autostart = true
 
-[node name="Main Player" type="CharacterBody2D" parent="." unique_id=659504146]
+[node name="Player" type="CharacterBody2D" parent="." unique_id=659504146]
+unique_name_in_owner = true
 z_index = 5
 position = Vector2(320, 180)
 script = ExtResource("4_ipu61")
 
-[node name="Player Camera" type="Camera2D" parent="Main Player" unique_id=395235874]
+[node name="Player Camera" type="Camera2D" parent="Player" unique_id=395235874]
 limit_bottom = 360
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 
-[node name="Player Animation" type="AnimatedSprite2D" parent="Main Player" unique_id=134535417]
+[node name="Player Animation" type="AnimatedSprite2D" parent="Player" unique_id=134535417]
 sprite_frames = SubResource("SpriteFrames_xgy4w")
 animation = &"Idle"
 autoplay = "Idle"
 
-[node name="Player Collision" type="CollisionShape2D" parent="Main Player" unique_id=1823341704]
+[node name="Player Collision" type="CollisionShape2D" parent="Player" unique_id=1823341704]
 position = Vector2(0, 4.5)
 shape = SubResource("RectangleShape2D_xgy4w")
 
-[node name="Jump Particle" type="CPUParticles2D" parent="Main Player" unique_id=635381313]
+[node name="Jump Particle" type="CPUParticles2D" parent="Player" unique_id=635381313]
 position = Vector2(0, 12)
 emitting = false
 texture = ExtResource("7_wi4c7")
@@ -171,7 +233,7 @@ one_shot = true
 emission_shape = 3
 emission_rect_extents = Vector2(5, 1)
 
-[node name="Dash particle" type="CPUParticles2D" parent="Main Player" unique_id=1313935640]
+[node name="Dash particle" type="CPUParticles2D" parent="Player" unique_id=1313935640]
 position = Vector2(-4, 4)
 emitting = false
 amount = 20
@@ -191,7 +253,7 @@ scale = Vector2(0.64062494, 0.64062494)
 texture = ExtResource("8_2l77h")
 
 [node name="Timer" type="Timer" parent="UI Canvas/Timer Image" unique_id=1711553460]
-wait_time = 0.009999999999999998
+wait_time = 0.00999999999999999
 autostart = true
 
 [node name="Timer Text" type="RichTextLabel" parent="UI Canvas" unique_id=367030321]
@@ -203,6 +265,19 @@ theme_override_fonts/normal_font = ExtResource("9_nqdth")
 theme_override_font_sizes/normal_font_size = 20
 text = "00 : 00 : 00"
 vertical_alignment = 1
+
+[node name="Ghost" type="CharacterBody2D" parent="." unique_id=181793442]
+script = ExtResource("10_5cypo")
+
+[node name="Ghost Animation" type="AnimatedSprite2D" parent="Ghost" unique_id=720239914]
+position = Vector2(57, 185)
+sprite_frames = SubResource("SpriteFrames_ei6bp")
+animation = &"Rage"
+autoplay = "Default"
+
+[node name="Ghost Collision" type="CollisionShape2D" parent="Ghost" unique_id=1598049426]
+position = Vector2(57, 184)
+shape = SubResource("CapsuleShape2D_visbf")
 
 [connection signal="timeout" from="Visual Ground/Player Position Test (X)" to="." method="_on_test_timeout"]
 [connection signal="timeout" from="UI Canvas/Timer Image/Timer" to="." method="_on_timer_timeout"]
