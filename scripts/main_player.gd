@@ -1,6 +1,9 @@
 extends CharacterBody2D
 
 
+@onready var jumpparticle:CPUParticles2D = $"Jump Particle"
+@onready var dashparticle:CPUParticles2D = $"Dash particle"
+
 var SPEED = 300
 var JUMP_VELOCITY = -400.0
 var dash = false
@@ -21,6 +24,7 @@ func _physics_process(delta: float):
 	if Input.is_action_just_pressed("ui_accept") and maxjump > jump:
 		velocity.y = JUMP_VELOCITY
 		jump += 1
+		jumpparticle.emitting = true
 	
 	if Input.is_action_just_pressed("dash"):
 		dashactivate()
@@ -51,6 +55,7 @@ func dashactivate():
 		dash = true
 		speedcheck = SPEED
 		SPEED = dashspeed
+		dashparticle.emitting = true
 		await get_tree().create_timer(0.5).timeout
 		SPEED = speedcheck
 		dash = false
