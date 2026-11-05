@@ -6,7 +6,7 @@ extends Node2D
 
 var partwidth = 640
 var partheight = 360
-
+var time = 30000
 
 func _ready():
 	pass
@@ -36,3 +36,20 @@ func duplicatebackground():
 func _on_test_timeout():
 	print(player.global_position.x)
 	print(player.global_position.y)
+
+
+
+
+
+func _on_timer_timeout():
+	if time <= 0:
+		time = 0
+		$"UI Canvas/Timer Text".text = "00 : 00 : 00"
+	else:
+		@warning_ignore("integer_division")
+		var minute = int(time / 6000)
+		@warning_ignore("integer_division")
+		var seconds = int(time / 100)% 60
+		var centi = int(time) % 100
+		$"UI Canvas/Timer Text".text = "%02d : %02d : %02d" % [minute , seconds , centi]
+		time -= 1

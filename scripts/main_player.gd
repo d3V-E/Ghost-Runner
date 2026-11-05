@@ -12,6 +12,8 @@ var speedcheck = 300
 var maxjump = 3
 var jump = 0
 
+
+
 @onready var animatedsprite: AnimatedSprite2D = $"Player Animation"
 
 func _physics_process(delta: float):
