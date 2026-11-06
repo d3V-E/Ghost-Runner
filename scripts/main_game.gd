@@ -3,10 +3,13 @@ extends Node2D
 @onready var player = $"Player"
 @onready var part = $"Visual Ground"
 @onready var background = $"Visual Ground/BackgroundSky"
+@onready var barrier = $"Visual Ground/Red Barrier"
+
 
 var partwidth = 640
 var partheight = 360
 var time = 30000
+
 
 func _ready():
 	pass

@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://uidwefvo8xfa" path="res://assets/Ground.png" id="3_ipu61"]
 [ext_resource type="Texture2D" uid="uid://dbgejvm07ta24" path="res://assets/Background Sky.png" id="3_ygxny"]
 [ext_resource type="Script" uid="uid://c2uop8yxdde1j" path="res://scripts/main_player.gd" id="4_ipu61"]
+[ext_resource type="Texture2D" uid="uid://bd182a7f8dksd" path="res://assets/Red.png" id="5_wjob3"]
+[ext_resource type="Script" uid="uid://bmfshlnot843l" path="res://scripts/red_barrier.gd" id="6_8xp80"]
 [ext_resource type="Texture2D" uid="uid://c4x380obe28c5" path="res://assets/Particle.png" id="7_wi4c7"]
 [ext_resource type="Texture2D" uid="uid://bq1s4nqksha3h" path="res://assets/timer.png" id="8_2l77h"]
 [ext_resource type="FontFile" uid="uid://cx2ex0q7cve0h" path="res://assets/fonts/Quantico-Bold.ttf" id="9_nqdth"]
@@ -265,6 +267,16 @@ theme_override_fonts/normal_font = ExtResource("9_nqdth")
 theme_override_font_sizes/normal_font_size = 20
 text = "00 : 00 : 00"
 vertical_alignment = 1
+
+[node name="Barrier Node" type="Node2D" parent="." unique_id=1662680256]
+script = ExtResource("6_8xp80")
+
+[node name="Red Barrier" type="Sprite2D" parent="Barrier Node" unique_id=1990127373]
+position = Vector2(-8911.5, -10348.5)
+scale = Vector2(27.848438, 59.49167)
+texture = ExtResource("5_wjob3")
+
+[node name="Barrier Area" type="Area2D" parent="Barrier Node/Red Barrier" unique_id=2001151322]
 
 [node name="Ghost" type="CharacterBody2D" parent="." unique_id=181793442]
 script = ExtResource("10_5cypo")
