@@ -122,6 +122,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xgy4w"]
 size = Vector2(10, 15)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4i4ku"]
+size = Vector2(640, 360)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_8xp80"]
 atlas = ExtResource("10_nqdth")
 region = Rect2(0, 0, 32, 32)
@@ -272,11 +275,15 @@ vertical_alignment = 1
 script = ExtResource("6_8xp80")
 
 [node name="Red Barrier" type="Sprite2D" parent="Barrier Node" unique_id=1990127373]
-position = Vector2(-8911.5, -10348.5)
-scale = Vector2(27.848438, 59.49167)
+position = Vector2(-1280, -305)
+scale = Vector2(4, 3.6944444)
 texture = ExtResource("5_wjob3")
 
 [node name="Barrier Area" type="Area2D" parent="Barrier Node/Red Barrier" unique_id=2001151322]
+
+[node name="Barrier Collision" type="CollisionShape2D" parent="Barrier Node/Red Barrier/Barrier Area" unique_id=1462681171]
+position = Vector2(0, 7.6293945e-06)
+shape = SubResource("RectangleShape2D_4i4ku")
 
 [node name="Ghost" type="CharacterBody2D" parent="." unique_id=181793442]
 script = ExtResource("10_5cypo")
@@ -293,3 +300,4 @@ shape = SubResource("CapsuleShape2D_visbf")
 
 [connection signal="timeout" from="Visual Ground/Player Position Test (X)" to="." method="_on_test_timeout"]
 [connection signal="timeout" from="UI Canvas/Timer Image/Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="Barrier Node/Red Barrier/Barrier Area" to="." method="_on_barrier_area_body_entered"]

@@ -56,3 +56,11 @@ func _on_timer_timeout():
 		var centi = int(time) % 100
 		$"UI Canvas/Timer Text".text = "%02d : %02d : %02d" % [minute , seconds , centi]
 		time -= 1
+
+
+
+
+func _on_barrier_area_body_entered(body: Node2D):
+	print(body.name)
+	if body.name == "Player" or body == %Player:
+		print("Player Red")
