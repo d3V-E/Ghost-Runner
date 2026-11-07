@@ -298,6 +298,62 @@ autoplay = "Default"
 position = Vector2(57, 184)
 shape = SubResource("CapsuleShape2D_visbf")
 
+[node name="Ghost1" type="CharacterBody2D" parent="." unique_id=1176286319]
+position = Vector2(-29, 0)
+script = ExtResource("10_5cypo")
+
+[node name="Ghost Animation" type="AnimatedSprite2D" parent="Ghost1" unique_id=1533940682]
+position = Vector2(57, 185)
+sprite_frames = SubResource("SpriteFrames_ei6bp")
+animation = &"Rage"
+autoplay = "Default"
+
+[node name="Ghost Collision" type="CollisionShape2D" parent="Ghost1" unique_id=473795427]
+position = Vector2(57, 184)
+shape = SubResource("CapsuleShape2D_visbf")
+
+[node name="Ghost2" type="CharacterBody2D" parent="." unique_id=984379431]
+position = Vector2(0, 29)
+script = ExtResource("10_5cypo")
+
+[node name="Ghost Animation" type="AnimatedSprite2D" parent="Ghost2" unique_id=2112188645]
+position = Vector2(57, 185)
+sprite_frames = SubResource("SpriteFrames_ei6bp")
+animation = &"Rage"
+autoplay = "Default"
+
+[node name="Ghost Collision" type="CollisionShape2D" parent="Ghost2" unique_id=1645738889]
+position = Vector2(57, 184)
+shape = SubResource("CapsuleShape2D_visbf")
+
+[node name="Ghost3" type="CharacterBody2D" parent="." unique_id=856973716]
+position = Vector2(-29, 29)
+script = ExtResource("10_5cypo")
+
+[node name="Ghost Animation" type="AnimatedSprite2D" parent="Ghost3" unique_id=1107423859]
+position = Vector2(57, 185)
+sprite_frames = SubResource("SpriteFrames_ei6bp")
+animation = &"Rage"
+autoplay = "Default"
+
+[node name="Ghost Collision" type="CollisionShape2D" parent="Ghost3" unique_id=1066110194]
+position = Vector2(57, 184)
+shape = SubResource("CapsuleShape2D_visbf")
+
+[node name="Ghost4" type="CharacterBody2D" parent="." unique_id=1973643572]
+position = Vector2(0, 57)
+script = ExtResource("10_5cypo")
+
+[node name="Ghost Animation" type="AnimatedSprite2D" parent="Ghost4" unique_id=975352218]
+position = Vector2(57, 185)
+sprite_frames = SubResource("SpriteFrames_ei6bp")
+animation = &"Rage"
+autoplay = "Default"
+
+[node name="Ghost Collision" type="CollisionShape2D" parent="Ghost4" unique_id=484467075]
+position = Vector2(57, 184)
+shape = SubResource("CapsuleShape2D_visbf")
+
 [connection signal="timeout" from="Visual Ground/Player Position Test (X)" to="." method="_on_test_timeout"]
 [connection signal="timeout" from="UI Canvas/Timer Image/Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="Barrier Node/Red Barrier/Barrier Area" to="." method="_on_barrier_area_body_entered"]

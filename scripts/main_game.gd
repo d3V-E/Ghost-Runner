@@ -7,14 +7,20 @@ extends Node2D
 @onready var ghostuser = $Ghost
 
 
-const save_path = "user://userdata.savefile"
+@onready var ghost1 = $Ghost
+@onready var ghost2 = $Ghost1
+@onready var ghost3 = $Ghost2
+@onready var ghost4 = $Ghost3
+@onready var ghost5 = $Ghost4
+
+const save_path = "user://userdata.savefiled"
 
 signal ghosts_changed
 
 var partwidth = 640
 var partheight = 360
 var time = 30000
-var ghosts = 10
+var ghosts = 1
 
 
 func save_data():
@@ -40,6 +46,7 @@ func load_data():
 
 func _ready():
 	load_data()
+	ghostupd()
 	#ghostduplicate()
 
 func _process(_delta):
@@ -105,3 +112,46 @@ func _on_barrier_area_body_entered(body: Node2D):
 
 func gameover():
 	print("Game Over")
+
+
+func ghostupd():
+	if ghosts == 1:
+		ghost1.visible = true
+		ghost2.visible = false
+		ghost3.visible = false
+		ghost4.visible = false
+		ghost5.visible = false
+		ghost2.queue_free()
+		ghost3.queue_free()
+		ghost4.queue_free()
+		ghost5.queue_free()
+	elif ghosts == 2:
+		ghost1.visible = true
+		ghost2.visible = true
+		ghost3.visible = false
+		ghost4.visible = false
+		ghost5.visible = false
+		ghost3.queue_free()
+		ghost4.queue_free()
+		ghost5.queue_free()
+	elif ghosts == 3:
+		ghost1.visible = true
+		ghost2.visible = true
+		ghost3.visible = true
+		ghost4.visible = false
+		ghost5.visible = false
+		ghost4.queue_free()
+		ghost5.queue_free()
+	elif ghosts == 4:
+		ghost1.visible = true
+		ghost2.visible = true
+		ghost3.visible = true
+		ghost4.visible = true
+		ghost5.visible = false
+		ghost5.queue_free()
+	elif ghosts == 5:
+		ghost1.visible = true
+		ghost2.visible = true
+		ghost3.visible = true
+		ghost4.visible = true
+		ghost5.visible = true
