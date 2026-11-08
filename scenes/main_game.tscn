@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bq1s4nqksha3h" path="res://assets/timer.png" id="8_2l77h"]
 [ext_resource type="FontFile" uid="uid://cx2ex0q7cve0h" path="res://assets/fonts/Quantico-Bold.ttf" id="9_nqdth"]
 [ext_resource type="Script" uid="uid://cmhsh6h4hbeoc" path="res://scripts/ghost.gd" id="10_5cypo"]
+[ext_resource type="FontFile" uid="uid://c6k5rlrhwft5g" path="res://assets/fonts/Geo-Regular.ttf" id="10_8xp80"]
 [ext_resource type="Texture2D" uid="uid://cr852yd82cwcw" path="res://assets/Ghost.png" id="10_nqdth"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r72bl"]
@@ -284,6 +285,24 @@ offset_bottom = 44.0
 theme_override_fonts/normal_font = ExtResource("9_nqdth")
 theme_override_font_sizes/normal_font_size = 20
 text = "00 : 00 : 00"
+vertical_alignment = 1
+
+[node name="Header" type="RichTextLabel" parent="UI Canvas" unique_id=257003191]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -78.0
+offset_top = -41.5
+offset_right = 78.0
+offset_bottom = 41.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("10_8xp80")
+theme_override_font_sizes/normal_font_size = 40
+text = "YOU LOSE"
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Barrier Node" type="Node2D" parent="." unique_id=1662680256]

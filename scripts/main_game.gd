@@ -5,7 +5,7 @@ extends Node2D
 @onready var background = $"Visual Ground/BackgroundSky"
 @onready var barrier = $"Visual Ground/Red Barrier"
 @onready var ghostuser = $Ghost
-
+@onready var text = $"UI Canvas/Header"
 
 @onready var ghost1 = $Ghost
 @onready var ghost2 = $Ghost1
@@ -52,6 +52,7 @@ func _ready():
 	backgroundcount.append(background)
 	partcount.append(part)
 	ghostupd()
+	text.visible = false
 	#ghostduplicate()
 
 func _process(_delta):
@@ -124,7 +125,8 @@ func _on_barrier_area_body_entered(body: Node2D):
 func gameover():
 	ghosts += 1
 	emit_signal("ghosts_changed")
-	
+	text.visible = true
+	$"UI Canvas/Header".text = "YOU LOSE"
 
 
 func ghostupd():
@@ -177,7 +179,8 @@ func _on_ghost_area_body_entered(body: Node2D):
 
 
 func win():
-	pass
+	text.visible = true
+	$"UI Canvas/Header".text = "YOU WIN"
 
 func _on_ghost_area_1_body_entered(body: Node2D):
 	if body.name == "Player":
