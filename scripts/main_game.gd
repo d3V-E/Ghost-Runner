@@ -13,11 +13,14 @@ extends Node2D
 @onready var ghost4 = $Ghost3
 @onready var ghost5 = $Ghost4
 
-const save_path = "user://userdata.savefiled"
+
+const save_path = "user://userdata.saves"
 
 signal ghosts_changed
 
 
+var runs = 0
+var gameovertrigger = false
 var partcount = []
 var backgroundcount = []
 var partwidth = 640
@@ -28,7 +31,8 @@ var ghosts = 1
 
 func save_data():
 	var data = {
-		"ghosts": ghosts
+		"ghosts": ghosts,
+		"runs": runs
 	}
 	var file = FileAccess.open(save_path, FileAccess.WRITE)
 	file.store_var(data)
@@ -43,6 +47,7 @@ func load_data():
 		file.close()
 		if typeof(data) == TYPE_DICTIONARY:
 			ghosts = data.get("ghosts" , 1)
+			runs = data.get("runs" , 0)
 		else:
 			save_data()
 
@@ -53,6 +58,8 @@ func _ready():
 	partcount.append(part)
 	ghostupd()
 	text.visible = false
+	gameovertrigger = false
+	runs += 1
 	#ghostduplicate()
 
 func _process(_delta):
@@ -123,10 +130,13 @@ func _on_barrier_area_body_entered(body: Node2D):
 
 
 func gameover():
+	if gameovertrigger:
+		return
 	ghosts += 1
 	emit_signal("ghosts_changed")
 	text.visible = true
 	$"UI Canvas/Header".text = "YOU LOSE"
+	save_data()
 
 
 func ghostupd():
@@ -175,7 +185,9 @@ func ghostupd():
 
 func _on_ghost_area_body_entered(body: Node2D):
 	if body.name == "Player":
-		gameover()
+		if gameovertrigger == false:
+			gameover()
+		gameovertrigger = true
 
 
 func win():
@@ -184,14 +196,18 @@ func win():
 
 func _on_ghost_area_1_body_entered(body: Node2D):
 	if body.name == "Player":
-		gameover()
+		if gameovertrigger == false:
+			gameover()
+		gameovertrigger = true
 
 
 
 
 func _on_ghost_area_2_body_entered(body: Node2D):
 	if body.name == "Player":
-		gameover()
+		if gameovertrigger == false:
+			gameover()
+		gameovertrigger = true
 
 
 
@@ -199,8 +215,9 @@ func _on_ghost_area_2_body_entered(body: Node2D):
 
 func _on_ghost_area_3_body_entered(body: Node2D):
 	if body.name == "Player":
-		gameover()
-	
+		if gameovertrigger == false:
+			gameover()
+		gameovertrigger = true
 
 
 
@@ -208,4 +225,6 @@ func _on_ghost_area_3_body_entered(body: Node2D):
 
 func _on_ghost_area_4_body_entered(body: Node2D):
 	if body.name == "Player":
-		gameover()
+		if gameovertrigger == false:
+			gameover()
+		gameovertrigger = true
