@@ -184,6 +184,21 @@ animations = [{
 radius = 9.0
 height = 22.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_impjs"]
+size = Vector2(20, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vsksg"]
+size = Vector2(20, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_66eor"]
+size = Vector2(19, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i5rhk"]
+size = Vector2(20, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_le6di"]
+size = Vector2(20, 18)
+
 [node name="Main game" type="Node2D" unique_id=1792818910]
 script = ExtResource("1_72e8q")
 
@@ -298,6 +313,12 @@ autoplay = "Default"
 position = Vector2(57, 184)
 shape = SubResource("CapsuleShape2D_visbf")
 
+[node name="Ghost Area" type="Area2D" parent="Ghost" unique_id=681643560]
+
+[node name="Ghost Collision Area" type="CollisionShape2D" parent="Ghost/Ghost Area" unique_id=2127115199]
+position = Vector2(57, 184)
+shape = SubResource("RectangleShape2D_impjs")
+
 [node name="Ghost1" type="CharacterBody2D" parent="." unique_id=1176286319]
 position = Vector2(-29, 0)
 script = ExtResource("10_5cypo")
@@ -311,6 +332,12 @@ autoplay = "Default"
 [node name="Ghost Collision" type="CollisionShape2D" parent="Ghost1" unique_id=473795427]
 position = Vector2(57, 184)
 shape = SubResource("CapsuleShape2D_visbf")
+
+[node name="Ghost Area1" type="Area2D" parent="Ghost1" unique_id=1152677833]
+
+[node name="Ghost Collision Area1" type="CollisionShape2D" parent="Ghost1/Ghost Area1" unique_id=517932948]
+position = Vector2(57, 184)
+shape = SubResource("RectangleShape2D_vsksg")
 
 [node name="Ghost2" type="CharacterBody2D" parent="." unique_id=984379431]
 position = Vector2(0, 29)
@@ -326,6 +353,12 @@ autoplay = "Default"
 position = Vector2(57, 184)
 shape = SubResource("CapsuleShape2D_visbf")
 
+[node name="Ghost Area2" type="Area2D" parent="Ghost2" unique_id=281912250]
+
+[node name="Ghost Collision Area2" type="CollisionShape2D" parent="Ghost2/Ghost Area2" unique_id=519197468]
+position = Vector2(56.5, 184)
+shape = SubResource("RectangleShape2D_66eor")
+
 [node name="Ghost3" type="CharacterBody2D" parent="." unique_id=856973716]
 position = Vector2(-29, 29)
 script = ExtResource("10_5cypo")
@@ -339,6 +372,12 @@ autoplay = "Default"
 [node name="Ghost Collision" type="CollisionShape2D" parent="Ghost3" unique_id=1066110194]
 position = Vector2(57, 184)
 shape = SubResource("CapsuleShape2D_visbf")
+
+[node name="Ghost Area3" type="Area2D" parent="Ghost3" unique_id=1967841200]
+
+[node name="Ghost Collision Area3" type="CollisionShape2D" parent="Ghost3/Ghost Area3" unique_id=1465588800]
+position = Vector2(57, 184)
+shape = SubResource("RectangleShape2D_i5rhk")
 
 [node name="Ghost4" type="CharacterBody2D" parent="." unique_id=1973643572]
 position = Vector2(0, 57)
@@ -354,6 +393,16 @@ autoplay = "Default"
 position = Vector2(57, 184)
 shape = SubResource("CapsuleShape2D_visbf")
 
-[connection signal="timeout" from="Visual Ground/Player Position Test (X)" to="." method="_on_test_timeout"]
+[node name="Ghost Area4" type="Area2D" parent="Ghost4" unique_id=485874241]
+
+[node name="Ghost Collision Area4" type="CollisionShape2D" parent="Ghost4/Ghost Area4" unique_id=1023602463]
+position = Vector2(57, 184)
+shape = SubResource("RectangleShape2D_le6di")
+
 [connection signal="timeout" from="UI Canvas/Timer Image/Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="Barrier Node/Red Barrier/Barrier Area" to="." method="_on_barrier_area_body_entered"]
+[connection signal="body_entered" from="Ghost/Ghost Area" to="." method="_on_ghost_area_body_entered"]
+[connection signal="body_entered" from="Ghost1/Ghost Area1" to="." method="_on_ghost_area_1_body_entered"]
+[connection signal="body_entered" from="Ghost2/Ghost Area2" to="." method="_on_ghost_area_2_body_entered"]
+[connection signal="body_entered" from="Ghost3/Ghost Area3" to="." method="_on_ghost_area_3_body_entered"]
+[connection signal="body_entered" from="Ghost4/Ghost Area4" to="." method="_on_ghost_area_4_body_entered"]

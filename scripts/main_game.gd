@@ -17,9 +17,12 @@ const save_path = "user://userdata.savefiled"
 
 signal ghosts_changed
 
+
+var partcount = []
+var backgroundcount = []
 var partwidth = 640
 var partheight = 360
-var time = 30000
+var time = 6000
 var ghosts = 1
 
 
@@ -46,6 +49,8 @@ func load_data():
 
 func _ready():
 	load_data()
+	backgroundcount.append(background)
+	partcount.append(part)
 	ghostupd()
 	#ghostduplicate()
 
@@ -60,7 +65,11 @@ func duplicatepart():
 	clone.global_position.x = part.global_position.x + partwidth
 	clone.global_position.y = part.global_position.y
 	add_child(clone)
+	partcount.append(clone)
 	part = clone
+	if partcount.size() > 3:
+		var oldpart = partcount.pop_front()
+		oldpart.queue_free()
 
 func duplicatebackground():
 	var cloneb = background.duplicate()
@@ -68,12 +77,14 @@ func duplicatebackground():
 	cloneb.global_position.y = background.global_position.y - partheight
 	cloneb.z_index = -1
 	add_child(cloneb)
+	backgroundcount.append(cloneb)
 	background = cloneb
-
-
-func _on_test_timeout():
-	print(player.global_position.x)
-	print(player.global_position.y)
+	#if backgroundcount.size() > 3:
+		#var oldb = backgroundcount.pop_front()
+		#oldb.queue_free()
+#func _on_test_timeout():
+	#print(player.global_position.x)
+	#print(player.global_position.y)
 
 
 
@@ -83,6 +94,7 @@ func _on_timer_timeout():
 	if time <= 0:
 		time = 0
 		$"UI Canvas/Timer Text".text = "00 : 00 : 00"
+		win()
 	else:
 		@warning_ignore("integer_division")
 		var minute = int(time / 6000)
@@ -104,14 +116,15 @@ func _on_timer_timeout():
 
 
 func _on_barrier_area_body_entered(body: Node2D):
-	print(body.name)
 	if body.name == "Player" or body == %Player:
-		print("Player Red")
+		gameover()
 
 
 
 func gameover():
-	print("Game Over")
+	ghosts += 1
+	emit_signal("ghosts_changed")
+	
 
 
 func ghostupd():
@@ -149,9 +162,47 @@ func ghostupd():
 		ghost4.visible = true
 		ghost5.visible = false
 		ghost5.queue_free()
-	elif ghosts == 5:
+	elif ghosts >= 5:
 		ghost1.visible = true
 		ghost2.visible = true
 		ghost3.visible = true
 		ghost4.visible = true
 		ghost5.visible = true
+
+
+
+func _on_ghost_area_body_entered(body: Node2D):
+	if body.name == "Player":
+		gameover()
+
+
+func win():
+	pass
+
+func _on_ghost_area_1_body_entered(body: Node2D):
+	if body.name == "Player":
+		gameover()
+
+
+
+
+func _on_ghost_area_2_body_entered(body: Node2D):
+	if body.name == "Player":
+		gameover()
+
+
+
+
+
+func _on_ghost_area_3_body_entered(body: Node2D):
+	if body.name == "Player":
+		gameover()
+	
+
+
+
+
+
+func _on_ghost_area_4_body_entered(body: Node2D):
+	if body.name == "Player":
+		gameover()
