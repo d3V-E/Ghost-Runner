@@ -208,6 +208,8 @@ position = Vector2(320, 180)
 
 [node name="Background" type="Sprite2D" parent="Visual Ground" unique_id=1636706226]
 z_index = -1
+position = Vector2(0, -179.99998)
+scale = Vector2(1, 1.9999999)
 texture = ExtResource("2_0rdsr")
 
 [node name="BackgroundSky" type="Sprite2D" parent="Visual Ground" unique_id=2146239580]
@@ -309,8 +311,8 @@ vertical_alignment = 1
 script = ExtResource("6_8xp80")
 
 [node name="Red Barrier" type="Sprite2D" parent="Barrier Node" unique_id=1990127373]
-position = Vector2(-1280, -305)
-scale = Vector2(4, 3.6944444)
+position = Vector2(-641, -3.1232834e-05)
+scale = Vector2(2, 2)
 texture = ExtResource("5_wjob3")
 
 [node name="Barrier Area" type="Area2D" parent="Barrier Node/Red Barrier" unique_id=2001151322]

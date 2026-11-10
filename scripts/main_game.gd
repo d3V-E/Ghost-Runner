@@ -3,7 +3,7 @@ extends Node2D
 @onready var player = $"Player"
 @onready var part = $"Visual Ground"
 @onready var background = $"Visual Ground/BackgroundSky"
-@onready var barrier = $"Visual Ground/Red Barrier"
+@onready var barrier = $"Barrier Node/Red Barrier"
 @onready var ghostuser = $Ghost
 @onready var text = $"UI Canvas/Header"
 
@@ -14,7 +14,7 @@ extends Node2D
 @onready var ghost5 = $Ghost4
 
 
-const save_path = "user://userdata.saves"
+const save_path = "user://userdata.savesss"
 
 signal ghosts_changed
 
@@ -27,7 +27,8 @@ var partwidth = 640
 var partheight = 360
 var time = 6000
 var ghosts = 1
-
+var trackx = 0
+var tracky = 0
 
 func save_data():
 	var data = {
@@ -60,36 +61,48 @@ func _ready():
 	text.visible = false
 	gameovertrigger = false
 	runs += 1
+	trackx = part.global_position.x + partwidth
+	tracky = background.global_position.y - partheight
 	#ghostduplicate()
 
 func _process(_delta):
-	if player.global_position.x > part.global_position.x:
+	@warning_ignore("integer_division")
+	if player.global_position.x >= trackx - (partwidth - 100):
 		duplicatepart()
-	if player.global_position.y > background.global_position.y:
+	@warning_ignore("integer_division")
+	if player.global_position.y <= tracky + (partheight / 2):
 		duplicatebackground()
 
 func duplicatepart():
+	if partcount[-1].global_position.x >= trackx:
+		return
 	var clone = part.duplicate()
-	clone.global_position.x = part.global_position.x + partwidth
+	clone.global_position.x = trackx
 	clone.global_position.y = part.global_position.y
+	clone.z_index = 0
 	add_child(clone)
 	partcount.append(clone)
 	part = clone
+	trackx += partwidth
 	if partcount.size() > 3:
 		var oldpart = partcount.pop_front()
 		oldpart.queue_free()
 
+
 func duplicatebackground():
 	var cloneb = background.duplicate()
 	cloneb.global_position.x = background.global_position.x
-	cloneb.global_position.y = background.global_position.y - partheight
+	cloneb.global_position.y = tracky
 	cloneb.z_index = -1
 	add_child(cloneb)
 	backgroundcount.append(cloneb)
 	background = cloneb
-	#if backgroundcount.size() > 3:
-		#var oldb = backgroundcount.pop_front()
-		#oldb.queue_free()
+	tracky -= partheight
+	if backgroundcount.size() > 3:
+		var oldb = backgroundcount.pop_front()
+		oldb.queue_free()
+
+
 #func _on_test_timeout():
 	#print(player.global_position.x)
 	#print(player.global_position.y)
@@ -104,13 +117,13 @@ func _on_timer_timeout():
 		$"UI Canvas/Timer Text".text = "00 : 00 : 00"
 		win()
 	else:
+		time -= 1
 		@warning_ignore("integer_division")
 		var minute = int(time / 6000)
 		@warning_ignore("integer_division")
 		var seconds = int(time / 100)% 60
 		var centi = int(time) % 100
 		$"UI Canvas/Timer Text".text = "%02d : %02d : %02d" % [minute , seconds , centi]
-		time -= 1
 
 #func ghostduplicate():
 	#for i in range(ghosts):
@@ -134,70 +147,43 @@ func gameover():
 		return
 	ghosts += 1
 	emit_signal("ghosts_changed")
+	$"UI Canvas/Timer Image/Timer".stop()
 	text.visible = true
 	$"UI Canvas/Header".text = "YOU LOSE"
 	save_data()
+	await get_tree().create_timer(1.5).timeout
+	get_tree().reload_current_scene()
 
 
 func ghostupd():
-	if ghosts == 1:
-		ghost1.visible = true
-		ghost2.visible = false
-		ghost3.visible = false
-		ghost4.visible = false
-		ghost5.visible = false
-		ghost2.queue_free()
-		ghost3.queue_free()
-		ghost4.queue_free()
-		ghost5.queue_free()
-	elif ghosts == 2:
-		ghost1.visible = true
-		ghost2.visible = true
-		ghost3.visible = false
-		ghost4.visible = false
-		ghost5.visible = false
-		ghost3.queue_free()
-		ghost4.queue_free()
-		ghost5.queue_free()
-	elif ghosts == 3:
-		ghost1.visible = true
-		ghost2.visible = true
-		ghost3.visible = true
-		ghost4.visible = false
-		ghost5.visible = false
-		ghost4.queue_free()
-		ghost5.queue_free()
-	elif ghosts == 4:
-		ghost1.visible = true
-		ghost2.visible = true
-		ghost3.visible = true
-		ghost4.visible = true
-		ghost5.visible = false
-		ghost5.queue_free()
-	elif ghosts >= 5:
-		ghost1.visible = true
-		ghost2.visible = true
-		ghost3.visible = true
-		ghost4.visible = true
-		ghost5.visible = true
-
+	ghosts = clamp(ghosts, 1,5)
+	ghost1.visible = (ghosts >= 1)
+	ghost2.visible = (ghosts >= 2)
+	ghost3.visible = (ghosts >= 3)
+	ghost4.visible = (ghosts >= 4)
+	ghost5.visible = (ghosts >= 5)
 
 
 func _on_ghost_area_body_entered(body: Node2D):
 	if body.name == "Player":
 		if gameovertrigger == false:
 			gameover()
+			print("1")
 		gameovertrigger = true
 
 
 func win():
 	text.visible = true
 	$"UI Canvas/Header".text = "YOU WIN"
+	$"UI Canvas/Timer Image/Timer".stop()
+	await get_tree().create_timer(1.5).timeout
+	get_tree().reload_current_scene()
 
 func _on_ghost_area_1_body_entered(body: Node2D):
 	if body.name == "Player":
 		if gameovertrigger == false:
 			gameover()
+			print("2")
 		gameovertrigger = true
 
 
@@ -207,6 +193,7 @@ func _on_ghost_area_2_body_entered(body: Node2D):
 	if body.name == "Player":
 		if gameovertrigger == false:
 			gameover()
+			print("3")
 		gameovertrigger = true
 
 
@@ -217,6 +204,7 @@ func _on_ghost_area_3_body_entered(body: Node2D):
 	if body.name == "Player":
 		if gameovertrigger == false:
 			gameover()
+			print("4")
 		gameovertrigger = true
 
 
@@ -227,4 +215,5 @@ func _on_ghost_area_4_body_entered(body: Node2D):
 	if body.name == "Player":
 		if gameovertrigger == false:
 			gameover()
+			print("5")
 		gameovertrigger = true
